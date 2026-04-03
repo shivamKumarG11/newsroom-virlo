@@ -91,7 +91,7 @@ async function processStep(
   switch (step.id) {
     case 'ingestion':
       return {
-        sourcesQueried: ['GNews', 'NewsAPI', 'RSS Feeds'],
+        sourcesQueried: ['NewsAPI', 'GNews', 'RSS Feeds'],
         articlesFound: Math.floor(20 + Math.random() * 30),
         timeRange: '24 hours',
         query: input
@@ -131,14 +131,14 @@ async function processStep(
         keyInsights: Math.floor(3 + Math.random() * 3),
         viewpointsAnalyzed: Math.floor(2 + Math.random() * 3),
         confidenceScore: (0.8 + Math.random() * 0.15).toFixed(2),
-        processingModel: 'GPT-4-Turbo'
+        processingModel: 'Claude 3'
       }
     
     case 'output':
       return {
         status: 'success',
         resultsFormatted: true,
-        totalProcessingTime: `${(Date.now() - Date.now()).toFixed(0)}ms`,
+        totalProcessingTime: `${Math.floor(1500 + Math.random() * 500)}ms`,
         qualityScore: (0.85 + Math.random() * 0.1).toFixed(2),
         ready: true
       }
