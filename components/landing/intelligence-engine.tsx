@@ -13,6 +13,7 @@ import {
   Sparkles,
   Zap
 } from "lucide-react"
+import { IntelligenceStats } from "./intelligence-stats"
 import { cn } from "@/lib/utils"
 
 const PIPELINE_LAYERS = [
@@ -255,25 +256,8 @@ export function IntelligenceEngine() {
           ))}
         </div>
         
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
-        >
-          {[
-            { value: '50+', label: 'News Sources' },
-            { value: '10K+', label: 'Articles/Day' },
-            { value: '< 2s', label: 'Processing Time' },
-            { value: '95%', label: 'Accuracy Rate' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center p-6 rounded-xl bg-card border border-border">
-              <p className="text-3xl font-bold text-accent mb-1">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
+        {/* Stats - Live from Database */}
+        <IntelligenceStats />
         
         {/* CTA */}
         <motion.div

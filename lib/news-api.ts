@@ -370,25 +370,93 @@ function deduplicateArticles(articles: NormalizedArticle[]): NormalizedArticle[]
   return Array.from(seen.values())
 }
 
-// Fetch news from all sources
+// Fetch news from all sources - now from database with fallback
 export async function fetchNewsFromSources(): Promise<NormalizedArticle[]> {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500))
+  try {
+    const { getArticles } = await import('./db')
+    
+    // Try to fetch from database first
+    let dbArticles: any[] = []
+    try {
+      dbArticles = await getArticles(50, 0)
+    } catch (e) {
+      console.log('[v0] Database unavailable, using mock data')
+    }
+    
+    if (dbArticles && dbArticles.length > 0) {
+      // Convert database articles to normalized format
+      return dbArticles.map((article, index) => ({
+        id: article.id,
+        slug: generateSlug(article.title),
+        title: article.title,
+        subtitle: article.description,
+        excerpt: article.description,
+        content: article.content,
+        source: article.source,
+        sourceUrl: article.url,
+        publishedAt: article.published_at,
+        author: {
+          name: 'Virlo Intelligence',
+          role: 'News Aggregator'
+        },
+        imageUrl: article.image_url || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=800&fit=crop',
+        tags: extractTags(article.content, article.title),
+        category: extractCategory(article.content, article.title),
+        readingTime: estimateReadingTime(article.content)
+      }))
+    }
+  } catch (error) {
+    console.log('[v0] Database unavailable, falling back to mock data')
+  }
   
-  // Normalize all articles from our simulated feed
+  // Fallback to mock data if database is empty or unavailable
   const normalized = NEWS_FEED.map((article, index) => normalizeArticle(article, index))
-  
-  // Deduplicate
   const unique = deduplicateArticles(normalized)
   
-  // Sort by date
   return unique.sort((a, b) => 
     new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   )
 }
 
-// Search articles by query
+// Search articles by query - now uses database with fallback
 export async function searchArticles(query: string): Promise<NormalizedArticle[]> {
+  try {
+    const { searchArticles: dbSearch } = await import('./db')
+    
+    // Try database search first
+    let dbResults: any[] = []
+    try {
+      dbResults = await dbSearch(query, 50)
+    } catch (e) {
+      console.log('[v0] Database search unavailable, using in-memory search')
+    }
+    
+    if (dbResults && dbResults.length > 0) {
+      return dbResults.map((article) => ({
+        id: article.id,
+        slug: generateSlug(article.title),
+        title: article.title,
+        subtitle: article.description,
+        excerpt: article.description,
+        content: article.content,
+        source: article.source,
+        sourceUrl: article.url,
+        publishedAt: article.published_at,
+        author: {
+          name: 'Virlo Intelligence',
+          role: 'News Aggregator'
+        },
+        imageUrl: article.image_url || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=800&fit=crop',
+        tags: extractTags(article.content, article.title),
+        category: extractCategory(article.content, article.title),
+        readingTime: estimateReadingTime(article.content)
+      }))
+    }
+  } catch (error) {
+    console.log('[v0] Database unavailable, using in-memory search')
+  }
+  
+  // Fallback to in-memory search
   const allArticles = await fetchNewsFromSources()
   const searchTerms = query.toLowerCase().split(' ')
   

@@ -87,65 +87,11 @@ async function processStep(
   const processingTime = 300 + Math.random() * 500
   await new Promise(resolve => setTimeout(resolve, processingTime))
   
+  // Import and use realistic output generator
+  const { generateStepOutput } = await import('./pipeline-tracker')
+  
   // Generate realistic outputs for each step
-  switch (step.id) {
-    case 'ingestion':
-      return {
-        sourcesQueried: ['GNews', 'NewsAPI', 'RSS Feeds'],
-        articlesFound: Math.floor(20 + Math.random() * 30),
-        timeRange: '24 hours',
-        query: input
-      }
-    
-    case 'filtering':
-      const ingestionOutput = previousOutput as { articlesFound: number }
-      return {
-        inputArticles: ingestionOutput?.articlesFound || 25,
-        duplicatesRemoved: Math.floor(5 + Math.random() * 10),
-        relevanceFiltered: Math.floor(3 + Math.random() * 5),
-        remainingArticles: Math.floor(15 + Math.random() * 10),
-        confidenceScore: 0.85 + Math.random() * 0.1
-      }
-    
-    case 'enrichment':
-      return {
-        entitiesExtracted: Math.floor(30 + Math.random() * 20),
-        topicsIdentified: ['Technology', 'AI', 'Business', 'Innovation'].slice(0, Math.floor(2 + Math.random() * 3)),
-        sentimentAnalyzed: true,
-        categorized: true,
-        relatedArticlesLinked: Math.floor(5 + Math.random() * 5)
-      }
-    
-    case 'virlo':
-      return {
-        trendsAttached: Math.floor(3 + Math.random() * 4),
-        creatorSignals: Math.floor(10 + Math.random() * 15),
-        viralContentLinked: Math.floor(2 + Math.random() * 5),
-        socialVolume: `${Math.floor(100 + Math.random() * 900)}K mentions`,
-        sentimentScore: (0.5 + Math.random() * 0.4).toFixed(2)
-      }
-    
-    case 'reasoning':
-      return {
-        summaryGenerated: true,
-        keyInsights: Math.floor(3 + Math.random() * 3),
-        viewpointsAnalyzed: Math.floor(2 + Math.random() * 3),
-        confidenceScore: (0.8 + Math.random() * 0.15).toFixed(2),
-        processingModel: 'GPT-4-Turbo'
-      }
-    
-    case 'output':
-      return {
-        status: 'success',
-        resultsFormatted: true,
-        totalProcessingTime: `${(Date.now() - Date.now()).toFixed(0)}ms`,
-        qualityScore: (0.85 + Math.random() * 0.1).toFixed(2),
-        ready: true
-      }
-    
-    default:
-      return { processed: true }
-  }
+  return generateStepOutput(step.id, type, input, previousOutput)
 }
 
 // Run the full pipeline with callbacks for state updates
