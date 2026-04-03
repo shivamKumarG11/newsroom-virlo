@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { search, SearchResponse, SearchResult } from "@/lib/search"
 import { createPipeline, runPipeline, PipelineState } from "@/lib/pipeline"
+import { VirloProvider } from "@/lib/virlo-context"
 import { cn } from "@/lib/utils"
 
 function SearchResultCard({ result, index }: { result: SearchResult; index: number }) {
@@ -276,8 +277,10 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background" />}>
-      <SearchContent />
-    </Suspense>
+    <VirloProvider>
+      <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <SearchContent />
+      </Suspense>
+    </VirloProvider>
   )
 }
