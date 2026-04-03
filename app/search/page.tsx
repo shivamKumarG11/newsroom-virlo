@@ -14,12 +14,14 @@ import {
 } from "lucide-react"
 import { SearchBar } from "@/components/search/search-bar"
 import { PipelineVisualization } from "@/components/pipeline/pipeline-visualization"
+import { VisualIntelligenceReport } from "@/components/report/visual-intelligence-report"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { search, SearchResponse, SearchResult } from "@/lib/search"
 import { createPipeline, runPipeline, PipelineState } from "@/lib/pipeline"
+import { generateVisualReport } from "@/lib/report-generator"
 import { VirloProvider } from "@/lib/virlo-context"
 import { cn } from "@/lib/utils"
 
@@ -102,17 +104,22 @@ function SearchContent() {
   const [query, setQuery] = useState(initialQuery)
   const [results, setResults] = useState<SearchResponse | null>(null)
   const [pipeline, setPipeline] = useState<PipelineState | null>(null)
+  const [report, setReport] = useState<any>(null)
+  const [reportLoading, setReportLoading] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   
   const performSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults(null)
       setPipeline(null)
+      setReport(null)
       return
     }
     
     setIsSearching(true)
     setQuery(searchQuery)
+    setReport(null)
+    setReportLoading(false)
     
     // Create and run pipeline
     const newPipeline = createPipeline('search', searchQuery)
@@ -127,6 +134,20 @@ function SearchContent() {
     const searchResults = await search(searchQuery)
     setResults(searchResults)
     setIsSearching(false)
+    
+    // Generate visual report after search completes
+    if (searchResults && searchResults.results.length > 0) {
+      setReportLoading(true)
+      try {
+        const articles = searchResults.results.map(r => r.article)
+        const generatedReport = await generateVisualReport(searchQuery, articles as any)
+        setReport(generatedReport)
+      } catch (error) {
+        console.error('Report generation failed:', error)
+      } finally {
+        setReportLoading(false)
+      }
+    }
   }, [])
   
   // Initial search from URL
@@ -233,6 +254,17 @@ function SearchContent() {
                 </div>
               )}
               
+              {/* Visual Intelligence Report */}
+              {report && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-12 border-t border-border pt-12"
+                >
+                  <VisualIntelligenceReport report={report} isLoading={reportLoading} />
+                </motion.div>
+              )}
+
               {/* Results List */}
               <div className="space-y-4">
                 {results.results.map((result, index) => (

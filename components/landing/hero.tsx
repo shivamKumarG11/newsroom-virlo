@@ -10,15 +10,15 @@ import { VirloConnect } from "@/components/virlo-connect"
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Elements */}
+      {/* Background Elements - Warm Editorial Aesthetic */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-accent/5 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/8 via-transparent to-transparent" />
+        <div className="absolute top-1/3 left-1/3 h-[500px] w-[500px] rounded-full bg-accent/8 blur-3xl" />
+        <div className="absolute -bottom-1/4 -right-1/4 h-[400px] w-[400px] rounded-full bg-accent/5 blur-3xl" />
         
-        {/* Grid pattern */}
+        {/* Subtle texture overlay */}
         <div 
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.015]"
           style={{
             backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px),
                              linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
@@ -47,10 +47,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-balance max-w-4xl"
+            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-balance max-w-5xl leading-tight text-foreground"
           >
             The Intelligence Engine for{" "}
-            <span className="text-accent">Modern News</span>
+            <span className="text-accent inline-block">Modern News</span>
           </motion.h1>
 
           {/* Subheadline */}
