@@ -17,10 +17,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Pulse | AI Newsroom Powered by Social Intelligence',
-  description: 'Real reporting. Real signals. The AI newsroom that combines deep journalism with live social intelligence from Virlo.',
-  generator: 'v0.app',
-  keywords: ['AI news', 'social intelligence', 'trend analysis', 'Virlo', 'AI journalism'],
+  title: 'Virlo — News without the noise',
+  description: 'Real-time news from 30+ trusted sources. BBC, Reuters, AP, The Guardian, NYT and more — surfaced, deduplicated, and ready to read.',
+  keywords: ['news aggregator', 'real-time news', 'BBC', 'Reuters', 'AP News', 'The Guardian'],
   icons: {
     icon: [
       {
@@ -55,8 +54,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-zinc-950 text-zinc-50`}
+        suppressHydrationWarning
+      >
         <Providers>
           {children}
         </Providers>
