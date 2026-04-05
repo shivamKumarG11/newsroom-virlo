@@ -61,7 +61,7 @@ function TikTokIcon() {
   return (
     <div className="relative group/icon">
       <svg viewBox="0 0 24 24" className="w-10 h-10 drop-shadow-xl" aria-label="TikTok">
-        <rect width="24" height="24" rx="6" fill="#010101" />
+        <rect width="24" height="24" rx="6" fill="#2c2826" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
         <path d="M16.5 5.5c.3 1.8 1.4 2.8 3 3v2c-1 .1-2-.2-3-.8v5.3c0 2.6-2 4.5-4.5 4.5A4.5 4.5 0 0 1 7.5 15c0-2.6 2-4.5 4.5-4.5.3 0 .5 0 .8.1v2.1c-.2-.1-.5-.1-.8-.1a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 2.5-2.5V5.5h2z" fill="white" />
         <path d="M15.8 5.5c.3 1.8 1.4 2.8 3 3v2c-1 .1-2-.2-3-.8" fill="#69C9D0" />
         <path d="M12 12.6c.3 0 .5 0 .8.1v-2.1c-.3 0-.5-.1-.8-.1-2.5 0-4.5 2-4.5 4.5a4.5 4.5 0 0 0 4.5 4.5c2.5 0 4.5-2 4.5-4.5v-5.3c1 .6 2 .9 3 .8V7.5" fill="#EE1D52" opacity="0.8" />
@@ -74,9 +74,9 @@ function TikTokIcon() {
 function PlatformBadgeLarge({ platform }: { platform: TrendingTopic['platform'] }) {
   return (
     <div className="mb-4">
-      {platform === 'youtube'   && <YouTubeIcon />}
+      {platform === 'youtube' && <YouTubeIcon />}
       {platform === 'instagram' && <InstagramIcon />}
-      {platform === 'tiktok'    && <TikTokIcon />}
+      {platform === 'tiktok' && <TikTokIcon />}
     </div>
   )
 }
@@ -107,13 +107,13 @@ export function TrendingHashtags() {
   useEffect(() => { fetchTrends() }, [fetchTrends])
 
   return (
-    <section id="trending" className="relative py-32 lg:py-40 bg-[#120f0e] overflow-hidden">
+    <section id="trending" className="relative py-32 lg:py-15 bg-[#120f0e] overflow-hidden">
       {/* Console Texture Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')]" />
       <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-amber-500/[0.04] blur-[150px] rounded-full pointer-events-none" />
-      
+
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        
+
         {/* Command Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20">
           <div className="max-w-2xl">
@@ -121,20 +121,18 @@ export function TrendingHashtags() {
               <Activity className="h-4 w-4 text-amber-500 animate-pulse" />
               <p className="text-[10px] font-black uppercase tracking-[0.6em] text-amber-500">Global Pulse Stream</p>
             </div>
-            <h2 className="font-serif text-5xl md:text-7xl font-bold text-white tracking-tighter leading-[0.9]">
-              Social <br />
+            <h2 className="font-serif text-7xl md:text-8xl font-bold text-white tracking-tighter leading-[0.9]">
+              Social{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">Signals.</span>
             </h2>
           </div>
-          
+
           <div className="flex flex-col items-start md:items-end gap-3 md:pb-2">
             <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/5 border border-amber-500/20 rounded-md">
               <Terminal className="h-3 w-3 text-amber-600" />
               <span className="text-[10px] font-mono font-bold text-amber-500 uppercase tracking-widest">Live Console Feed</span>
             </div>
-            <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.2em] md:text-right">
-              CROSS-PLATFORM ANALYSIS · INTERCEPTING TRENDS
-            </p>
+
           </div>
         </div>
 
@@ -202,10 +200,10 @@ export function TrendingHashtags() {
                       <span className="text-[11px] font-bold text-amber-500">{topic.views} views</span>
                     </div>
                     <div className="w-full h-[3px] bg-zinc-800 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }} 
-                        animate={{ width: "65%" }} 
-                        className="h-full bg-gradient-to-r from-amber-600 to-amber-400" 
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: "65%" }}
+                        className="h-full bg-gradient-to-r from-amber-600 to-amber-400"
                       />
                     </div>
                     <p className="text-[9px] font-mono text-zinc-700 uppercase tracking-[0.2em] mt-1 text-right">
@@ -232,13 +230,13 @@ export function TrendingHashtags() {
             className="mt-20 pt-10 border-t border-zinc-800/40 flex flex-col md:flex-row items-center justify-between gap-6"
           >
             <div className="flex items-center gap-6">
-               <div className="flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
-                 <span className="text-[9px] font-mono text-amber-500 uppercase tracking-widest">Engine Active</span>
-               </div>
-               <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
-                 Divergence Sync Check: {new Date(data.cachedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-               </span>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                <span className="text-[9px] font-mono text-amber-500 uppercase tracking-widest">Engine Active</span>
+              </div>
+              <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
+                Divergence Sync Check: {new Date(data.cachedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
             <div className="flex items-center gap-4 text-[9px] font-black text-zinc-700 uppercase tracking-[0.3em]">
               <span>System Throughput</span>

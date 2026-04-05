@@ -17,25 +17,22 @@ export function Navbar() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { scrollY } = useScroll()
-  
-  // Dominant Background - Always visible white
+
+  // Dominant Background - Chocolaty Experiment
   const backgroundColor = useTransform(
     scrollY,
     [0, 50],
-    ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 0.98)"]
+    ["rgba(62, 39, 35, 1)", "rgba(42, 26, 23, 0.95)"]
   )
-  
+
   const paddingTop = useTransform(scrollY, [0, 50], ["20px", "10px"])
   const maxWidth = useTransform(scrollY, [0, 50], ["100%", "98%"])
   const borderRadius = useTransform(scrollY, [0, 50], ["0px", "20px"])
 
   return (
     <>
-      {/* Top Gradient Blur - Light Mode */}
-      <div className="nav-blur" />
-
       <motion.nav
-        style={{ 
+        style={{
           paddingTop,
           width: maxWidth,
           left: "50%",
@@ -44,33 +41,24 @@ export function Navbar() {
         className="fixed top-0 z-50 px-4 transition-all duration-500"
       >
         <motion.div
-          style={{ 
+          style={{
             backgroundColor,
-            borderRadius,
+            borderRadius: "15px",
             borderWidth: "1px",
-            borderColor: "rgba(0, 0, 0, 0.08)",
+            borderColor: "rgba(245, 158, 11, 0.2)",
           }}
           className={cn(
-            "mx-auto max-w-7xl px-8 transition-all duration-300 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.05)]",
+            "mx-auto max-w-7xl px-8 transition-all duration-300 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.3)]",
             scrollY.get() > 20 ? "py-3" : "py-4"
           )}
         >
           <div className="flex items-center justify-between">
             {/* Logo Section - Larger & Professional */}
             <div className="flex items-center gap-12">
-              <Link href="/" className="group flex items-center gap-4">
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 shadow-xl shadow-amber-500/10 transition-all duration-300 group-hover:shadow-amber-500/20">
-                  <span className="font-serif text-3xl font-bold text-white italic">V</span>
-                  <div className="absolute -inset-1 rounded-2xl bg-amber-500/10 blur opacity-0" />
-                </div>
-                <div className="flex flex-col leading-tight">
-                  <span className="font-serif text-2xl font-bold tracking-tight text-zinc-950 group-hover:text-amber-700 transition-colors">
-                    VIRLO
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.25em] text-zinc-500">
-                    <Sparkles className="h-3 w-3 text-amber-500" /> Intelligence
-                  </span>
-                </div>
+              <Link href="/" className="group flex items-center">
+                <span className="font-serif text-5xl lg:text-5xl font-black tracking-tighter text-white">
+                  ai<span className="font-light italic text-amber-500">Vintage</span>
+                </span>
               </Link>
 
               {/* Desktop Nav links */}
@@ -82,8 +70,8 @@ export function Navbar() {
                       key={item.label}
                       href={item.href}
                       className={cn(
-                        "relative px-5 py-2.5 text-xs uppercase tracking-widest font-black transition-all group",
-                        active ? "text-amber-700" : "text-zinc-600 hover:text-zinc-950"
+                        "relative px-6 py-2.5 text-xs uppercase tracking-widest font-black transition-all group",
+                        active ? "text-amber-500" : "text-zinc-300 hover:text-white"
                       )}
                     >
                       <span className="relative z-10">{item.label}</span>
@@ -106,20 +94,20 @@ export function Navbar() {
 
             {/* Right side actions */}
             <div className="flex items-center gap-4">
-              <Button 
+              <Button
                 asChild
                 variant="default"
                 className="hidden md:flex btn-premium h-12 px-8 rounded-full text-xs font-black uppercase tracking-[0.15em] border-none"
               >
                 <Link href="/search" className="flex items-center gap-2 text-white">
-                  Launch Terminal <ArrowRight className="h-4 w-4" />
+                  Get Started <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
 
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="flex lg:hidden h-12 w-12 items-center justify-center rounded-2xl bg-zinc-50 border border-zinc-200 text-zinc-900 transition-all hover:bg-zinc-100"
+                className="flex lg:hidden h-12 w-12 items-center justify-center rounded-2xl bg-white/10 border border-white/20 text-white transition-all hover:bg-white/20"
               >
                 {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -152,8 +140,8 @@ export function Navbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
                         "flex items-center justify-between p-5 rounded-3xl border transition-all",
-                        pathname === item.href 
-                          ? "bg-amber-50 border-amber-200 text-amber-700 shadow-sm shadow-amber-500/5" 
+                        pathname === item.href
+                          ? "bg-amber-50 border-amber-200 text-amber-700 shadow-sm shadow-amber-500/5"
                           : "bg-zinc-50 border-zinc-100 text-zinc-600"
                       )}
                     >
@@ -165,14 +153,14 @@ export function Navbar() {
                     </Link>
                   </motion.div>
                 ))}
-                
+
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                   className="pt-10"
                 >
-                  <Button 
+                  <Button
                     asChild
                     className="w-full btn-premium h-16 rounded-3xl text-sm font-black uppercase tracking-widest text-white"
                   >

@@ -78,16 +78,19 @@ export function Hero() {
               }
             }}
           />
-          {/* Bright, welcoming overlays instead of dark ones */}
-          <div className="absolute inset-0 bg-white/0" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/0 to-white/0" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-transparent to-white/0" />
+          {/* Web designer CSS Vignette Overlay */}
+          <div
+            className="absolute inset-0 z-0 pointer-events-none mix-blend-multiply"
+            style={{
+              background: "radial-gradient(circle at center, transparent 20%, rgba(217, 119, 6, 0.7) 70%, rgba(62, 39, 35, 0.6) 120%)"
+            }}
+          />
         </motion.div>
       </AnimatePresence>
 
       {/* ── Content Grid ── */}
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-32 pb-20 w-full mt-10">
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-[1fr_500px] gap-16 lg:gap-12 items-center">
 
           {/* ── Left: Hero Copy ── */}
           <motion.div
@@ -95,27 +98,25 @@ export function Hero() {
             initial="hidden"
             animate="show"
             className="max-w-2xl"
+            style={{ textShadow: "0 10px 40px rgba(37, 29, 29, 0.5), 0 2px 10px rgba(0,0,0,0.3)" }}
           >
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 mb-10">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-[10px] font-black uppercase tracking-[0.25em] text-amber-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
-                Intelligence Engine v2.1
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                {SLIDES[current].label}
-              </span>
-            </motion.div>
 
-            <motion.h1 variants={itemVariants} className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter text-zinc-900 leading-[0.9] mb-8">
+
+            <motion.h1
+              variants={itemVariants}
+              className="font-serif text-5xl md:text-7xl lg:text-[7.8rem] font-bold tracking-tighter text-white leading-[0.9] mb-8"
+              style={{ textShadow: "0 10px 40px rgba(37, 29, 29, 0.5), 0 2px 10px rgba(0,0,0,0.3)" }}
+            >
               News without <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-br from-amber-500 via-amber-700 to-zinc-600">
+              <span
+                className="text-transparent bg-clip-text bg-gradient-to-br from-amber-400 via-amber-600 to-amber-700"
+                style={{ filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.4))" }}
+              >
                 the noise.
               </span>
             </motion.h1>
 
-            <motion.p variants={itemVariants} className="text-lg text-zinc-600 leading-relaxed mb-12 font-medium max-w-xl">
-              30+ global sources. Multi-provider AI synthesis. Real-time intelligence — surfaced, deduplicated, and distilled.
-            </motion.p>
+
 
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
               <Link
@@ -169,10 +170,8 @@ export function Hero() {
                       <span className="font-serif text-xl font-bold text-amber-900 italic">V</span>
                     </div>
                     <div>
-                      <p className="text-sm font-black tracking-tight text-zinc-900">Virlo</p>
-                      <p className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-zinc-500 uppercase">
-                        Social Pulse Layer
-                      </p>
+                      <p className="text-xl font-black tracking-tight text-zinc-900">Virlo</p>
+
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-200">
@@ -185,9 +184,7 @@ export function Hero() {
               {/* Body Content */}
               <div className="px-7 py-6 space-y-6">
                 <div>
-                  <p className="text-sm font-bold text-zinc-900 mb-1 tracking-tight">
-                    Real-time social pulse
-                  </p>
+
                   <p className="text-xs text-zinc-600 leading-relaxed font-medium">
                     Virlo monitors trending narratives across top networks. Signals refresh every 24 hours to separate signal from the noise.
                   </p>
@@ -203,20 +200,7 @@ export function Hero() {
                   ))}
                 </div>
 
-                {/* Ledger list */}
-                <div className="space-y-2.5">
-                  {[
-                    "Trending computational models",
-                    "Global sentiment vectors",
-                    "Real-time volume metrics",
-                    "Deduplicated insight feeds",
-                  ].map((item, idx) => (
-                    <div key={item} className="flex items-center gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
-                      <span className="text-xs text-zinc-600 font-medium">{item}</span>
-                    </div>
-                  ))}
-                </div>
+
 
                 {/* Call to Action */}
                 <button
@@ -227,10 +211,6 @@ export function Hero() {
                   <ChevronDown className="h-3.5 w-3.5 group-hover:translate-y-0.5 transition-transform text-amber-600" />
                   Explore What&apos;s Trending
                 </button>
-
-                <p className="text-[9px] font-mono text-zinc-400 text-center uppercase tracking-widest">
-                  Powered by Virlo Intelligence
-                </p>
               </div>
             </div>
           </motion.div>

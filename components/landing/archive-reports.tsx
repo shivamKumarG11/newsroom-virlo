@@ -7,10 +7,10 @@ import type { ArchiveReport } from "@/lib/reports-db"
 import { printReport } from "@/lib/print-report"
 
 const PROVIDER_COLOR: Record<string, string> = {
-  groq:       "text-amber-400 border-amber-500/30 bg-amber-500/5",
+  groq: "text-amber-400 border-amber-500/30 bg-amber-500/5",
   openrouter: "text-zinc-400 border-zinc-500/30 bg-zinc-500/5",
-  gemini:     "text-amber-500 border-amber-600/30 bg-amber-600/5",
-  anthropic:  "text-orange-400 border-orange-500/30 bg-orange-500/5",
+  gemini: "text-amber-500 border-amber-600/30 bg-amber-600/5",
+  anthropic: "text-orange-400 border-orange-500/30 bg-orange-500/5",
 }
 
 function ReportCard({ report, i }: { report: ArchiveReport; i: number }) {
@@ -133,7 +133,7 @@ export function ArchiveSection() {
     fetch("/api/report/archive")
       .then(r => r.json())
       .then(d => setReports(d.reports ?? []))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false))
   }, [])
 
@@ -149,11 +149,10 @@ export function ArchiveSection() {
   const hasMore = visible < reports.length
 
   return (
-    <section className="archive-parallax relative py-40 overflow-hidden bg-zinc-950">
+    <section className="archive-parallax relative py-15 overflow-hidden bg-zinc-950">
       {/* Heavy Artistic Overlays */}
-      <div className="absolute inset-0 bg-[#1a1110]/95" />
+      <div className="absolute inset-0 bg-[#1a1110]/85" />
       <div className="absolute inset-0 bg-gradient-to-br from-amber-600/5 via-transparent to-orange-900/10 pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FAFAFA] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-zinc-900 to-transparent pointer-events-none" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -161,22 +160,22 @@ export function ArchiveSection() {
         {/* Header - The Historical Record */}
         <div ref={headerRef}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1 }}
             className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20"
           >
-            <div className="max-w-2xl">
+            <div className="max-w-5xl">
               <div className="flex items-center gap-3 mb-6">
                 <Bookmark className="h-4 w-4 text-amber-500" />
                 <p className="text-[10px] font-black uppercase tracking-[0.6em] text-amber-500">The Intelligence Ledger</p>
               </div>
-              <h2 className="font-serif text-5xl md:text-7xl font-bold text-white tracking-tighter leading-[0.9]">
-                Preserved <br />
+              <h2 className="font-serif text-9xl md:text-8xl font-bold text-white tracking-tighter leading-[0.9]">
+                Preserved{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">on record.</span>
               </h2>
               <p className="text-zinc-500 text-sm font-medium mt-8 max-w-md leading-relaxed">
-                A permanent, cryptographically-aware history of all filtered intelligence. Every signal is immortalized in the Virlo archives for secondary analysis.
+                A permanent, cryptographically-aware history of all filtered intelligence. Every signal is immortalized in the aiVintage archives for secondary analysis.
               </p>
             </div>
             <div className="flex-shrink-0 text-right md:pb-2">

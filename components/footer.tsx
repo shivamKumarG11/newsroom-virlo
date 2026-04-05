@@ -22,8 +22,8 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="hover:opacity-70 transition-opacity">
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">
-                VIRLO
+              <span className="font-serif text-3xl font-bold tracking-tight text-white uppercase italic">
+                aiVintage
               </span>
             </Link>
             <p className="text-xs font-medium text-zinc-500 max-w-xs leading-relaxed uppercase tracking-widest">
@@ -52,7 +52,7 @@ export function Footer() {
 
         <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">
-            © {new Date().getFullYear()} Virlo. All articles link directly to original publications.
+            © {new Date().getFullYear()} aiVintage. All articles link directly to original publications.
           </p>
           <div className="flex items-center gap-8">
             <Link href="#" className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 hover:text-white transition-colors">Privacy</Link>
