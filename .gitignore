@@ -14,3 +14,6 @@ next.user-config.*
 node_modules
 .next/
 .DS_Store
+
+# SQLite data directory (no longer used — project uses Supabase)
+data/

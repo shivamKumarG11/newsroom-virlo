@@ -17,33 +17,19 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Virlo — News without the noise',
-  description: 'Real-time news from 30+ trusted sources. BBC, Reuters, AP, The Guardian, NYT and more — surfaced, deduplicated, and ready to read.',
-  keywords: ['news aggregator', 'real-time news', 'BBC', 'Reuters', 'AP News', 'The Guardian'],
+  title: 'AI-Vantage — News without the noise',
+  description: 'AI-powered news intelligence from 30+ global sources. Aggregated, synthesized, and distilled in real-time.',
+  keywords: ['news aggregator', 'AI news', 'real-time intelligence', 'news synthesis', 'Reuters', 'AP News'],
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: '/apple-icon.png',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f0f14' },
-  ],
+  themeColor: '#000000',
   width: 'device-width',
   initialScale: 1,
 }

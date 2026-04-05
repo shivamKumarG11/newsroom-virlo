@@ -1,105 +1,62 @@
 import Link from "next/link"
 
-const footerLinks = {
-  product: [
-    { label: "News", href: "/news" },
-    { label: "Trends", href: "/trends" },
-    { label: "Deep Dives", href: "/deep-dives" },
-  ],
-  company: [
-    { label: "About", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Contact", href: "#" },
-  ],
-  legal: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" },
-  ],
+function VirloMark() {
+  return (
+    <svg width="60" height="18" viewBox="0 0 80 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Virlo" className="text-foreground">
+      <path d="M2 4L8 18L14 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="20" cy="4.5" r="1.25" fill="currentColor"/>
+      <line x1="20" y1="8" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="25" y1="8" x2="25" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M25 11C25 11 27 8 30 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="35" y1="3" x2="35" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <rect x="40" y="7.5" width="9" height="11" rx="4.5" stroke="currentColor" strokeWidth="2"/>
+    </svg>
+  )
 }
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card/50">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <footer className="border-t border-white/5 bg-black">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="relative h-8 w-8">
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-accent to-accent/60" />
-                <div className="absolute inset-[2px] rounded-[6px] bg-background flex items-center justify-center">
-                  <span className="font-serif font-bold text-accent">P</span>
-                </div>
-              </div>
-              <span className="font-serif text-xl font-semibold tracking-tight">
-                Pulse
+          <div className="flex flex-col gap-6">
+            <Link href="/" className="hover:opacity-70 transition-opacity">
+              <span className="font-serif text-2xl font-bold tracking-tight text-white">
+                VIRLO
               </span>
             </Link>
-            <p className="mt-4 text-sm text-muted-foreground max-w-xs">
-              AI-powered journalism meets real-time social intelligence. News that matters, delivered with context.
+            <p className="text-xs font-medium text-zinc-500 max-w-xs leading-relaxed uppercase tracking-widest">
+              Aggregated intelligence from 30+ global sources. Sourced, verified, and distilled in real-time.
             </p>
           </div>
 
-          {/* Product Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Product</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Company</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Legal</h4>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Nav links */}
+          <nav className="flex flex-wrap items-center gap-x-12 gap-y-4">
+            {[
+              { href: "/news", label: "News" },
+              { href: "/search", label: "Search" },
+              { href: "/trends", label: "Trends" },
+              { href: "/deep-dives", label: "Deep Dives" },
+            ].map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-primary transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            {new Date().getFullYear()} Pulse. Powered by Virlo.
+        <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">
+            © {new Date().getFullYear()} Virlo. All articles link directly to original publications.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">Intelligence by</span>
-            <span className="text-sm font-medium text-foreground">Virlo</span>
+          <div className="flex items-center gap-8">
+            <Link href="#" className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 hover:text-white transition-colors">Privacy</Link>
+            <Link href="#" className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600 hover:text-white transition-colors">Terms</Link>
           </div>
         </div>
       </div>

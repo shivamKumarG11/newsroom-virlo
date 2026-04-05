@@ -5,14 +5,14 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: 240 10% 3.9%;    /* zinc-950 */
+  --background: 0 0% 0%;         /* OLED Black */
   --foreground: 0 0% 98%;        /* zinc-50 */
-  --card: 240 10% 3.9%;
+  --card: 240 10% 3.9%;          /* zinc-950 */
   --card-foreground: 0 0% 98%;
   --popover: 240 10% 3.9%;
   --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
+  --primary: 142 70% 50%;        /* Cyber Emerald */
+  --primary-foreground: 144 33% 97%;
   --secondary: 240 3.7% 15.9%;
   --secondary-foreground: 0 0% 98%;
   --muted: 240 3.7% 15.9%;
@@ -23,17 +23,19 @@
   --destructive-foreground: 0 0% 98%;
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --ring: 142 70% 50%;
   --radius: 0.5rem;
   
   /* Custom accents */
-  --emerald-accent: 142 70% 50%; /* emerald-500 */
+  --emerald-accent: 142 70% 50%;
+  --emerald-glow: 142 70% 50% / 0.15;
 }
 
 @theme inline {
   --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   --font-serif: 'Playfair Display', 'Georgia', serif;
   --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+  
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
@@ -53,19 +55,79 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   
   --color-emerald-accent: hsl(var(--emerald-accent));
+  --shadow-emerald: 0 0 20px var(--emerald-glow);
+  
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 3s ease-in-out infinite;
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border/40 outline-ring/30 transition-colors duration-200;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-emerald-500/30;
+    background-image: radial-gradient(circle at 50% -20%, #10b98105 0%, transparent 50%);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tighter;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl bg-black/40 border border-white/10;
+  }
+  .glass-emerald {
+    @apply backdrop-blur-xl bg-emerald-500/5 border border-emerald-500/20;
+  }
+  .architectural-glass {
+    @apply backdrop-blur-2xl bg-black/60 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+    background-image: linear-gradient(to bottom right, rgba(255,255,255,0.05), transparent);
+  }
+  .btn-shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+  }
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, #059669 100%);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  .btn-premium:hover {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px);
+  }
+  .nav-blur {
+    @apply fixed top-0 w-full h-24 pointer-events-none z-[49];
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+  }
+  .archive-parallax {
+    background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=60');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
   }
 }

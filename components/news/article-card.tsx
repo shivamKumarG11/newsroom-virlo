@@ -22,52 +22,51 @@ export function ArticleCard({ article, variant = "default", index = 0 }: Article
   if (variant === "featured") {
     return (
       <motion.article
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
+        transition={{ duration: 0.8, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
         className="group relative"
       >
         <Link href={`/news/${article.slug}`} className="block">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
+          <div className="relative aspect-[21/9] overflow-hidden rounded-sm bg-black border border-white/5">
             <Image
               src={article.imageUrl}
               alt={article.title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-90"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             
-            {/* Content Overlay */}
-            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="inline-flex items-center rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+            <div className="absolute inset-0 flex flex-col justify-end p-10 md:p-16">
+              <div className="flex items-center gap-4 mb-8">
+                <span className="inline-flex items-center rounded-full glass-emerald px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-primary shadow-emerald/20">
                   {article.category}
                 </span>
                 {article.virloData && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/10 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white">
-                    <TrendingUp className="h-3 w-3" />
-                    {article.virloData.trendScore}% trending
+                  <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-white/70">
+                    <TrendingUp className="h-3 w-3 text-primary" />
+                    {article.virloData.trendScore}% Trending
                   </span>
                 )}
               </div>
               
-              <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-medium text-white text-balance leading-tight mb-3">
+              <h2 className="font-serif text-4xl md:text-6xl font-bold text-white text-balance leading-[0.9] tracking-tighter mb-6 group-hover:text-primary transition-colors duration-500">
                 {article.title}
               </h2>
               
-              <p className="text-white/80 text-sm md:text-base line-clamp-2 mb-4 max-w-3xl">
+              <p className="text-zinc-400 text-lg md:text-xl line-clamp-2 mb-8 max-w-3xl font-medium leading-relaxed">
                 {article.excerpt}
               </p>
               
-              <div className="flex items-center gap-4 text-sm text-white/60">
-                <span>{article.author.name}</span>
-                <span className="h-1 w-1 rounded-full bg-white/40" />
+              <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                <span className="text-zinc-300">{article.author.name}</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-primary/40" />
                 <span>{formattedDate}</span>
-                <span className="h-1 w-1 rounded-full bg-white/40" />
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  {article.readingTime} min read
+                <span className="h-1.5 w-1.5 rounded-full bg-primary/40" />
+                <span className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-primary/60" />
+                  {article.readingTime} MIN READ
                 </span>
               </div>
             </div>
@@ -80,26 +79,26 @@ export function ArticleCard({ article, variant = "default", index = 0 }: Article
   if (variant === "compact") {
     return (
       <motion.article
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         className="group"
       >
-        <Link href={`/news/${article.slug}`} className="flex gap-4">
-          <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
+        <Link href={`/news/${article.slug}`} className="flex gap-6 items-center p-4 rounded-sm hover:bg-white/[0.02] transition-colors">
+          <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-sm bg-zinc-900 border border-white/5">
             <Image
               src={article.imageUrl}
               alt={article.title}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-110 opacity-80"
             />
           </div>
           <div className="flex-1 min-w-0">
-            <span className="text-xs font-medium text-accent">{article.category}</span>
-            <h3 className="font-serif text-base font-medium text-foreground line-clamp-2 mt-1 group-hover:text-accent transition-colors">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2 block">{article.category}</span>
+            <h3 className="font-serif text-lg font-bold text-white line-clamp-2 leading-tight group-hover:text-primary transition-colors">
               {article.title}
             </h3>
-            <p className="text-xs text-muted-foreground mt-1">{formattedDate}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-2">{formattedDate}</p>
           </div>
         </Link>
       </motion.article>
@@ -114,39 +113,40 @@ export function ArticleCard({ article, variant = "default", index = 0 }: Article
       className="group"
     >
       <Link href={`/news/${article.slug}`} className="block">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted mb-4">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-black border border-white/5 mb-6">
           <Image
             src={article.imageUrl}
             alt={article.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
         
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-xs font-medium text-accent">{article.category}</span>
+        <div className="flex items-center gap-4 mb-4">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{article.category}</span>
           {article.virloData && (
-            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-              <TrendingUp className="h-3 w-3" />
+            <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+              <TrendingUp className="h-3.5 w-3.5 text-primary" />
               {article.virloData.trendScore}%
             </span>
           )}
         </div>
         
-        <h3 className="font-serif text-xl font-medium text-foreground text-balance leading-tight mb-2 group-hover:text-accent transition-colors">
+        <h3 className="font-serif text-2xl font-bold text-white text-balance leading-[1.1] tracking-tight mb-4 group-hover:text-primary transition-colors duration-300">
           {article.title}
         </h3>
         
-        <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
+        <p className="text-zinc-400 text-sm line-clamp-2 mb-6 font-medium leading-relaxed">
           {article.excerpt}
         </p>
         
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-          <span>{article.author.name}</span>
-          <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
-          <span className="flex items-center gap-1">
-            <Clock className="h-3.5 w-3.5" />
-            {article.readingTime} min
+        <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+          <span className="text-zinc-300">{article.author.name}</span>
+          <span className="h-1 w-1 rounded-full bg-primary/40" />
+          <span className="flex items-center gap-2">
+            <Clock className="h-3.5 w-3.5 text-primary/60" />
+            {article.readingTime} MIN
           </span>
         </div>
       </Link>

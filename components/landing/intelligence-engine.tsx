@@ -1,281 +1,89 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { 
-  Database, 
-  Filter, 
-  Tags, 
-  TrendingUp, 
-  Brain, 
-  CheckCircle2,
-  ArrowRight,
-  Sparkles,
-  Zap
-} from "lucide-react"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 import { IntelligenceStats } from "./intelligence-stats"
-import { cn } from "@/lib/utils"
 
-const PIPELINE_LAYERS = [
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.4, delay },
+})
+
+const HOW_IT_WORKS = [
   {
-    id: 'ingestion',
-    icon: Database,
-    name: 'Ingestion',
-    title: 'Data Collection',
-    description: 'Aggregating from 50+ trusted sources in real-time',
-    metrics: ['50+ Sources', 'Real-time', '10K+ Articles/day'],
-    color: 'from-blue-500 to-cyan-500'
+    step: "01",
+    title: "Collect",
+    body: "Pulls articles in real time from 30+ sources — newswires, broadsheets, and specialist outlets.",
   },
   {
-    id: 'filtering',
-    icon: Filter,
-    name: 'Filtering',
-    title: 'Quality Control',
-    description: 'Removing noise and duplicates with smart algorithms',
-    metrics: ['95% Accuracy', 'Deduplication', 'Relevance Scoring'],
-    color: 'from-purple-500 to-pink-500'
+    step: "02",
+    title: "Deduplicate",
+    body: "Strips out repeated stories and low-signal rewrites. You see the original reporting, not the echo.",
   },
   {
-    id: 'enrichment',
-    icon: Tags,
-    name: 'Enrichment',
-    title: 'Data Enhancement',
-    description: 'Adding metadata, entities, and semantic tags',
-    metrics: ['Entity Extraction', 'Auto-tagging', 'Categorization'],
-    color: 'from-amber-500 to-orange-500'
+    step: "03",
+    title: "Categorise",
+    body: "Automatically assigns topic, region, and sentiment so you can filter to what you care about.",
   },
   {
-    id: 'virlo',
-    icon: TrendingUp,
-    name: 'Virlo Intelligence',
-    title: 'Social Signals',
-    description: 'Integrating trend data and creator insights',
-    metrics: ['Trend Score', 'Sentiment', 'Viral Detection'],
-    color: 'from-accent to-purple-600'
+    step: "04",
+    title: "Surface",
+    body: "Presents articles newest-first with source credibility ratings and direct links to the original publication.",
   },
-  {
-    id: 'reasoning',
-    icon: Brain,
-    name: 'AI Reasoning',
-    title: 'Intelligence Layer',
-    description: 'Synthesizing insights and generating analysis',
-    metrics: ['GPT-4 Powered', 'Multi-perspective', 'Fact-checked'],
-    color: 'from-emerald-500 to-teal-500'
-  },
-  {
-    id: 'output',
-    icon: CheckCircle2,
-    name: 'Output',
-    title: 'Final Delivery',
-    description: 'Structured, verified intelligence ready for you',
-    metrics: ['Quality Scored', 'Confidence Rated', 'Source Linked'],
-    color: 'from-green-500 to-emerald-500'
-  }
 ]
 
-function AnimatedConnection({ isActive }: { isActive: boolean }) {
-  return (
-    <div className="hidden md:flex items-center justify-center w-12 relative">
-      <div className="w-full h-0.5 bg-border relative overflow-hidden">
-        <motion.div
-          className="absolute inset-y-0 left-0 bg-accent"
-          initial={{ width: 0 }}
-          animate={{ width: isActive ? '100%' : 0 }}
-          transition={{ duration: 0.5 }}
-        />
-      </div>
-      <motion.div
-        className="absolute"
-        animate={{ 
-          x: isActive ? [0, 48, 0] : 0,
-          opacity: isActive ? [1, 1, 0] : 0
-        }}
-        transition={{ 
-          duration: 1.5, 
-          repeat: isActive ? Infinity : 0,
-          repeatDelay: 0.5
-        }}
-      >
-        <Sparkles className="w-3 h-3 text-accent" />
-      </motion.div>
-    </div>
-  )
-}
-
-function PipelineLayer({ 
-  layer, 
-  index, 
-  isActive, 
-  isComplete 
-}: { 
-  layer: typeof PIPELINE_LAYERS[0]
-  index: number
-  isActive: boolean
-  isComplete: boolean
-}) {
-  const Icon = layer.icon
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className={cn(
-        "relative flex flex-col items-center p-6 rounded-2xl border transition-all duration-500",
-        isActive && "bg-card border-accent shadow-lg shadow-accent/10",
-        !isActive && isComplete && "bg-card/50 border-border",
-        !isActive && !isComplete && "bg-secondary/30 border-border/50"
-      )}
-    >
-      {/* Icon */}
-      <div className={cn(
-        "relative w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-500",
-        isActive && `bg-gradient-to-r ${layer.color} text-white shadow-lg`,
-        !isActive && isComplete && `bg-gradient-to-r ${layer.color} text-white opacity-80`,
-        !isActive && !isComplete && "bg-secondary text-muted-foreground"
-      )}>
-        <Icon className="w-6 h-6" />
-        
-        {isActive && (
-          <motion.div
-            className={cn(
-              "absolute inset-0 rounded-xl bg-gradient-to-r opacity-50",
-              layer.color
-            )}
-            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        )}
-      </div>
-      
-      {/* Content */}
-      <h4 className={cn(
-        "text-sm font-medium mb-1 transition-colors",
-        isActive ? "text-accent" : "text-foreground"
-      )}>
-        {layer.name}
-      </h4>
-      
-      <p className="text-xs text-muted-foreground text-center mb-3">
-        {layer.description}
-      </p>
-      
-      {/* Metrics */}
-      <div className="flex flex-wrap justify-center gap-1.5">
-        {layer.metrics.map((metric, i) => (
-          <span
-            key={i}
-            className={cn(
-              "text-[10px] px-2 py-0.5 rounded-full transition-colors",
-              isActive ? "bg-accent/10 text-accent" : "bg-secondary text-muted-foreground"
-            )}
-          >
-            {metric}
-          </span>
-        ))}
-      </div>
-      
-      {/* Step number */}
-      <div className="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-background border border-border flex items-center justify-center">
-        <span className="text-xs font-medium text-muted-foreground">{index + 1}</span>
-      </div>
-    </motion.div>
-  )
-}
-
 export function IntelligenceEngine() {
-  const [activeStep, setActiveStep] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(true)
-  
-  // Animate through steps
-  useEffect(() => {
-    if (!isAnimating) return
-    
-    const interval = setInterval(() => {
-      setActiveStep(prev => (prev + 1) % (PIPELINE_LAYERS.length + 1))
-    }, 2000)
-    
-    return () => clearInterval(interval)
-  }, [isAnimating])
-  
   return (
-    <section className="py-24 bg-gradient-to-b from-background via-secondary/20 to-background overflow-hidden">
+    <section id="intelligence-engine" className="py-32 border-t border-white/5 bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent mb-6">
-            <Zap className="w-4 h-4" />
-            <span className="text-sm font-medium">The Intelligence Engine</span>
-          </div>
-          
-          <h2 className="font-serif text-3xl md:text-5xl font-medium text-foreground mb-6 text-balance">
-            From Raw Information to
-            <br />
-            <span className="text-accent">Structured Intelligence</span>
-          </h2>
-          
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Our 6-layer processing pipeline transforms raw news into actionable intelligence. 
-            Every article passes through multiple AI agents for verification, enrichment, and analysis.
-          </p>
+        <div className="grid md:grid-cols-2 gap-20 mb-32 items-end">
+          <motion.div {...fade(0)}>
+            <p className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-6">
+              Our Methodology
+            </p>
+            <h2 className="font-serif text-5xl md:text-7xl font-bold text-white leading-[0.9] tracking-tighter">
+              Real sources.<br />No noise.
+            </h2>
+          </motion.div>
+          <motion.p {...fade(0.08)} className="text-zinc-400 leading-relaxed md:pb-2 text-xl font-medium max-w-lg">
+            Virlo doesn't generate articles or rewrite them. We surface original reporting, 
+            distilled through a high-signal intelligence pipeline.
+          </motion.p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-32">
+          {HOW_IT_WORKS.map((item, i) => (
+            <motion.div 
+              key={item.step} 
+              {...fade(i * 0.1)}
+              className="group relative p-10 glass rounded-sm overflow-hidden hover:border-primary/30 transition-all duration-500 hover:-translate-y-2"
+            >
+              <div className="absolute -top-6 -right-6 text-9xl font-serif font-bold text-white/[0.02] select-none group-hover:text-primary/5 transition-colors duration-500">
+                {item.step}
+              </div>
+              <h3 className="text-xl font-bold text-white mb-6 relative z-10 tracking-tight">{item.title}</h3>
+              <p className="text-zinc-400 leading-relaxed relative z-10 font-medium">{item.body}</p>
+              
+              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div {...fade(0.2)}>
+          <IntelligenceStats />
         </motion.div>
-        
-        {/* Pipeline Visualization - Desktop */}
-        <div className="hidden lg:flex items-start justify-center gap-2 mb-16">
-          {PIPELINE_LAYERS.map((layer, index) => (
-            <div key={layer.id} className="flex items-center">
-              <PipelineLayer
-                layer={layer}
-                index={index}
-                isActive={activeStep === index}
-                isComplete={activeStep > index}
-              />
-              {index < PIPELINE_LAYERS.length - 1 && (
-                <AnimatedConnection isActive={activeStep > index} />
-              )}
-            </div>
-          ))}
-        </div>
-        
-        {/* Pipeline Visualization - Mobile */}
-        <div className="lg:hidden grid grid-cols-2 gap-4 mb-16">
-          {PIPELINE_LAYERS.map((layer, index) => (
-            <PipelineLayer
-              key={layer.id}
-              layer={layer}
-              index={index}
-              isActive={activeStep === index}
-              isComplete={activeStep > index}
-            />
-          ))}
-        </div>
-        
-        {/* Stats - Live from Database */}
-        <IntelligenceStats />
-        
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <p className="text-muted-foreground mb-6">
-            See the pipeline in action on every search and article
-          </p>
-          <a
+
+        <motion.div {...fade(0.26)} className="mt-24 text-center">
+          <Link
             href="/news"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground rounded-xl font-medium hover:bg-accent/90 transition-colors"
+            className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-primary transition-all group"
           >
-            Explore the News Feed
-            <ArrowRight className="w-4 h-4" />
-          </a>
+            Browse the live feed
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform" />
+          </Link>
         </motion.div>
       </div>
     </section>

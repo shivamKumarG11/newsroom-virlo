@@ -82,7 +82,7 @@ export function ShareButton({ title, url }: ShareButtonProps) {
           <Linkedin className="h-4 w-4" />
           Share on LinkedIn
         </DropdownMenuItem>
-        {typeof navigator !== "undefined" && navigator.share && (
+        {typeof navigator !== "undefined" && 'share' in navigator && (
           <DropdownMenuItem onClick={handleNativeShare} className="gap-2">
             <Share2 className="h-4 w-4" />
             More options

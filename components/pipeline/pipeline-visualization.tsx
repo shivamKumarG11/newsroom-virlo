@@ -197,7 +197,7 @@ export function PipelineVisualization({
                 )}
                 
                 <AnimatePresence>
-                  {step.status === 'completed' && step.output && showDetails && (
+                  {step.status === 'completed' && step.output != null && showDetails && (
                     <StepOutput output={step.output} />
                   )}
                 </AnimatePresence>

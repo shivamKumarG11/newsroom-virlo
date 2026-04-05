@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
             duration: s.duration,
             output: s.output
           })),
-          status: finalPipeline.isComplete ? 'completed' : 'error'
+          status: finalPipeline.isComplete ? 'completed' : 'failed'
         })
       } catch (dbError) {
         console.error('Error saving pipeline execution:', dbError)

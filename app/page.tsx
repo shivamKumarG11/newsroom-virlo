@@ -1,21 +1,19 @@
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/landing/hero"
-import { IntelligenceEngine } from "@/components/landing/intelligence-engine"
-import { VirloFeatures } from "@/components/landing/virlo-features"
-import { CTA } from "@/components/landing/cta"
-import { Footer } from "@/components/footer"
+import { WorkflowSection } from "@/components/landing/workflow"
+import { ArchiveSection } from "@/components/landing/archive-reports"
+import { TrendingHashtags } from "@/components/landing/trending-hashtags"
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       <Navbar />
       <main>
         <Hero />
-        <IntelligenceEngine />
-        <VirloFeatures />
-        <CTA />
+        <WorkflowSection />
+        <ArchiveSection />
+        <TrendingHashtags />
       </main>
-      <Footer />
     </div>
   )
 }

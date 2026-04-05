@@ -154,15 +154,6 @@ export class NewsAggregator {
     return deduplicated
   }
 
-  // Normalize content for pipeline processing
-  normalizeArticle(article: Article): Article {
-    return {
-      ...article,
-      title: article.title.trim(),
-      description: article.description.trim(),
-      content: article.content.trim(),
-    }
-  }
 }
 
 export const newsAggregator = new NewsAggregator()
