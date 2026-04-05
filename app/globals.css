@@ -5,30 +5,38 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: 0 0% 0%;         /* OLED Black */
-  --foreground: 0 0% 98%;        /* zinc-50 */
-  --card: 240 10% 3.9%;          /* zinc-950 */
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 142 70% 50%;        /* Cyber Emerald */
-  --primary-foreground: 144 33% 97%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 142 70% 50%;
-  --radius: 0.5rem;
+  --background: 0 0% 100%;       /* Pure White */
+  --foreground: 240 10% 10%;     /* Deep Charcoal */
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 10%;
   
-  /* Custom accents */
-  --emerald-accent: 142 70% 50%;
-  --emerald-glow: 142 70% 50% / 0.15;
+  /* Gold Primary */
+  --primary: 43 96% 56%;         
+  --primary-foreground: 240 10% 10%;
+  
+  --secondary: 240 5% 96%;       
+  --secondary-foreground: 240 10% 10%;
+  --muted: 240 5% 96%;
+  --muted-foreground: 240 5% 45%;
+  
+  /* Chocolate Accent */
+  --accent: 20 54% 23%;          
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 5% 90%;
+  --input: 240 5% 90%;
+  --ring: 43 96% 56%;
+  --radius: 0.75rem;
+  
+  /* Welcoming Accents */
+  --indigo-accent: 243 75% 59%;
+  --violet-accent: 262 83% 58%;
+  --amber-accent: 43 96% 56%;
+  --indigo-glow: 243 75% 59% / 0.15;
 }
 
 @theme inline {
@@ -61,8 +69,10 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   
-  --color-emerald-accent: hsl(var(--emerald-accent));
-  --shadow-emerald: 0 0 20px var(--emerald-glow);
+  --color-primary-accent: hsl(var(--indigo-accent));
+  --color-secondary-accent: hsl(var(--violet-accent));
+  --color-warm-accent: hsl(var(--amber-accent));
+  --shadow-premium: 0 0 20px var(--indigo-glow);
   
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
@@ -89,8 +99,9 @@
     @apply border-border/40 outline-ring/30 transition-colors duration-200;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-emerald-500/30;
-    background-image: radial-gradient(circle at 50% -20%, #10b98105 0%, transparent 50%);
+    @apply bg-background text-foreground antialiased selection:bg-amber-500/30;
+    /* Soft warm gradient for the white background */
+    background-image: radial-gradient(circle at 50% -20%, rgba(251,191,36,0.08) 0%, transparent 50%);
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tighter;
@@ -99,30 +110,31 @@
 
 @layer components {
   .glass {
-    @apply backdrop-blur-xl bg-black/40 border border-white/10;
+    @apply backdrop-blur-xl bg-white/80 border border-black/5;
   }
-  .glass-emerald {
-    @apply backdrop-blur-xl bg-emerald-500/5 border border-emerald-500/20;
+  .glass-premium {
+    @apply backdrop-blur-xl bg-white/90 border border-zinc-200/50 shadow-sm;
   }
   .architectural-glass {
-    @apply backdrop-blur-2xl bg-black/60 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
-    background-image: linear-gradient(to bottom right, rgba(255,255,255,0.05), transparent);
+    /* For Light Mode: Bright, slightly translucent, soft drop shadow */
+    @apply backdrop-blur-2xl bg-white/85 border border-zinc-200 shadow-[0_8px_30px_rgba(0,0,0,0.04)];
+    background-image: linear-gradient(to bottom right, rgba(255,255,255,1), rgba(255,255,255,0.4));
   }
   .btn-shimmer {
-    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent;
   }
   .btn-premium {
-    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, #059669 100%);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95 text-white;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, #D97706 100%);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
   }
   .btn-premium:hover {
-    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+    transform: translateY(-2px);
   }
   .nav-blur {
     @apply fixed top-0 w-full h-24 pointer-events-none z-[49];
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, transparent 100%);
   }
   .archive-parallax {
     background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=60');

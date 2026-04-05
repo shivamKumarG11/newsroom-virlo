@@ -3,11 +3,9 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, Zap, ChevronDown, Wifi, Youtube, Instagram, TrendingUp } from "lucide-react"
+import { ArrowRight, Zap, ChevronDown, Wifi, Youtube, Instagram, TrendingUp, Sparkles } from "lucide-react"
 
 // ── Slideshow images ──────────────────────────────────────────────────────────
-// Drop slide-1.jpg … slide-5.jpg into /public/hero/ to use your own images.
-// Falls back to Unsplash if local files are missing.
 const SLIDES = [
   { local: "/hero/slide-1.jpg", fallback: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=75", label: "Global Events" },
   { local: "/hero/slide-2.jpg", fallback: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=1920&q=75", label: "Breaking News" },
@@ -16,11 +14,30 @@ const SLIDES = [
   { local: "/hero/slide-5.jpg", fallback: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=75", label: "Technology" },
 ]
 
+// Professional Light Mode Platforms
 const PLATFORMS = [
-  { icon: Youtube,    label: "YouTube",   color: "text-red-400",  bg: "bg-red-500/10 border-red-500/20" },
-  { icon: Instagram,  label: "Instagram", color: "text-pink-400", bg: "bg-pink-500/10 border-pink-500/20" },
-  { icon: TrendingUp, label: "TikTok",    color: "text-cyan-400", bg: "bg-cyan-500/10 border-cyan-500/20" },
+  { icon: Youtube, label: "YouTube", color: "text-zinc-600", bg: "bg-white/0 border-zinc-200" },
+  { icon: Instagram, label: "Instagram", color: "text-amber-700", bg: "bg-white/0 border-amber-200" },
+  { icon: TrendingUp, label: "TikTok", color: "text-zinc-800", bg: "bg-white/0 border-zinc-300" },
 ]
+
+// Framer Motion Variants for Staggered Entrances
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 60, damping: 20 }
+  }
+}
 
 export function Hero() {
   const [current, setCurrent] = useState(0)
@@ -36,8 +53,9 @@ export function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
-      {/* Slideshow background */}
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#FAFAFA]">
+
+      {/* ── Background Slideshow (Light Overlay) ── */}
       <AnimatePresence mode="sync">
         <motion.div
           key={current}
@@ -60,156 +78,158 @@ export function Hero() {
               }
             }}
           />
-          <div className="absolute inset-0 bg-black/75" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80" />
+          {/* Bright, welcoming overlays instead of dark ones */}
+          <div className="absolute inset-0 bg-white/0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/0 to-white/0" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-transparent to-white/0" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content grid */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-32 pb-20 w-full">
-        <div className="grid lg:grid-cols-[1fr_380px] gap-12 items-center">
+      {/* ── Content Grid ── */}
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 pt-32 pb-20 w-full mt-10">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-16 lg:gap-12 items-center">
 
-          {/* ── Left: hero copy ── */}
+          {/* ── Left: Hero Copy ── */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="max-w-2xl"
           >
-            <div className="flex items-center gap-3 mb-10">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-[10px] font-black uppercase tracking-[0.25em] text-primary">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 mb-10">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-[10px] font-black uppercase tracking-[0.25em] text-amber-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
                 Intelligence Engine v2.1
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
                 {SLIDES[current].label}
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter text-white leading-[0.9] mb-8">
+            <motion.h1 variants={itemVariants} className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter text-zinc-900 leading-[0.9] mb-8">
               News without <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-white to-zinc-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-amber-500 via-amber-700 to-zinc-600">
                 the noise.
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-lg text-zinc-400 leading-relaxed mb-12 font-medium max-w-xl">
+            <motion.p variants={itemVariants} className="text-lg text-zinc-600 leading-relaxed mb-12 font-medium max-w-xl">
               30+ global sources. Multi-provider AI synthesis. Real-time intelligence — surfaced, deduplicated, and distilled.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-4">
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
               <Link
                 href="/news"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-black text-sm font-bold uppercase tracking-[0.15em] rounded-sm hover:opacity-90 transition-all hover:-translate-y-0.5 group"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-br from-amber-500 to-amber-600 text-white text-sm font-bold uppercase tracking-[0.15em] rounded-md hover:brightness-110 shadow-[0_4px_15px_rgba(245,158,11,0.3)] transition-all hover:-translate-y-0.5 group"
               >
                 Latest News
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/search"
-                className="inline-flex items-center gap-3 px-8 py-4 border border-white/10 text-white text-sm font-bold uppercase tracking-[0.15em] rounded-sm hover:bg-white/5 hover:border-white/20 transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-3 px-8 py-4 border border-zinc-300 bg-white/60 backdrop-blur-md text-zinc-900 text-sm font-bold uppercase tracking-[0.15em] rounded-md hover:bg-white hover:border-zinc-400 transition-all shadow-sm hover:-translate-y-0.5"
               >
-                <Zap className="h-4 w-4 text-primary" />
+                <Zap className="h-4 w-4 text-amber-500" />
                 Search Intelligence
               </Link>
-            </div>
+            </motion.div>
 
             {/* Slide indicators */}
-            <div className="flex items-center gap-2 mt-14">
+            <motion.div variants={itemVariants} className="flex items-center gap-2 mt-14">
               {SLIDES.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   aria-label={`Slide ${i + 1}`}
                   onClick={() => setCurrent(i)}
-                  className={`transition-all duration-500 rounded-full ${
-                    i === current
-                      ? "w-8 h-1.5 bg-primary"
-                      : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
-                  }`}
+                  className={`transition-all duration-500 rounded-full ${i === current
+                    ? "w-8 h-1.5 bg-gradient-to-r from-amber-500 to-zinc-400"
+                    : "w-1.5 h-1.5 bg-zinc-300 hover:bg-zinc-400"
+                    }`}
                 />
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* ── Right: Virlo social intelligence card ── */}
+          {/* ── Right: Social Intelligence Card ── */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-            className="w-full"
+            className="w-full lg:translate-y-4"
           >
-            <div className="glass rounded-sm border border-white/10 overflow-hidden">
+            <div className="architectural-glass rounded-xl border border-zinc-200 overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.06)] bg-white/90">
 
-              {/* Card header — Virlo branding */}
-              <div className="bg-gradient-to-br from-primary/10 to-transparent border-b border-white/5 px-7 py-6">
+              {/* Card header */}
+              <div className="bg-gradient-to-br from-[#FAFAFA] to-white border-b border-zinc-100 px-7 py-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    {/* Virlo logo mark */}
-                    <div className="w-10 h-10 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center shadow-lg shadow-primary/10">
-                      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" aria-label="Virlo">
-                        <path d="M4 5L12 19L20 5" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <circle cx="19" cy="5" r="2.5" fill="#10b981"/>
-                      </svg>
+                    {/* Premium Logo Mark */}
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-100 to-amber-200 border border-amber-300 flex items-center justify-center shadow-sm">
+                      <span className="font-serif text-xl font-bold text-amber-900 italic">V</span>
                     </div>
                     <div>
-                      <p className="text-sm font-black tracking-tight text-white">Virlo</p>
-                      <p className="text-[10px] font-mono text-zinc-500">Social Intelligence Layer</p>
+                      <p className="text-sm font-black tracking-tight text-zinc-900">Virlo</p>
+                      <p className="flex items-center gap-1.5 text-[10px] font-mono font-bold text-zinc-500 uppercase">
+                        Social Pulse Layer
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">
-                    <Wifi className="h-3 w-3 text-primary animate-pulse" />
-                    <span className="text-[9px] font-bold text-primary uppercase tracking-widest">Live</span>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-200">
+                    <Wifi className="h-3 w-3 text-amber-600 animate-pulse" />
+                    <span className="text-[9px] font-bold text-amber-700 uppercase tracking-widest">Live</span>
                   </div>
                 </div>
               </div>
 
-              {/* Platform signals */}
+              {/* Body Content */}
               <div className="px-7 py-6 space-y-6">
                 <div>
-                  <p className="text-sm font-bold text-white mb-1 tracking-tight">Real-time social pulse</p>
-                  <p className="text-xs text-zinc-400 leading-relaxed font-medium">
-                    Virlo monitors trending hashtags and content signals across the top three social platforms — refreshed every 24 hours and surfaced below.
+                  <p className="text-sm font-bold text-zinc-900 mb-1 tracking-tight">
+                    Real-time social pulse
+                  </p>
+                  <p className="text-xs text-zinc-600 leading-relaxed font-medium">
+                    Virlo monitors trending narratives across top networks. Signals refresh every 24 hours to separate signal from the noise.
                   </p>
                 </div>
 
                 {/* Platform badges */}
                 <div className="grid grid-cols-3 gap-3">
                   {PLATFORMS.map(({ icon: Icon, label, color, bg }) => (
-                    <div key={label} className={`flex flex-col items-center gap-2 py-4 rounded-sm border ${bg}`}>
+                    <div key={label} className={`flex flex-col items-center gap-2 py-4 rounded-lg border transition-colors shadow-sm ${bg}`}>
                       <Icon className={`h-5 w-5 ${color}`} />
                       <span className={`text-[9px] font-black uppercase tracking-widest ${color}`}>{label}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* What's shown */}
+                {/* Ledger list */}
                 <div className="space-y-2.5">
                   {[
-                    "Trending hashtags by platform",
-                    "View counts & content volume",
-                    "Top 12 signals per platform",
-                    "Updated once every 24 hours",
-                  ].map(item => (
+                    "Trending computational models",
+                    "Global sentiment vectors",
+                    "Real-time volume metrics",
+                    "Deduplicated insight feeds",
+                  ].map((item, idx) => (
                     <div key={item} className="flex items-center gap-2.5">
-                      <span className="w-1 h-1 rounded-full bg-primary flex-shrink-0" />
-                      <span className="text-xs text-zinc-400 font-medium">{item}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                      <span className="text-xs text-zinc-600 font-medium">{item}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* CTA */}
+                {/* Call to Action */}
                 <button
                   type="button"
                   onClick={scrollToTrending}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-[0.2em] rounded-sm hover:bg-primary/20 transition-all group"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-zinc-800 text-xs font-bold uppercase tracking-[0.2em] rounded-lg transition-all group shadow-sm"
                 >
-                  <ChevronDown className="h-3.5 w-3.5 group-hover:translate-y-0.5 transition-transform" />
+                  <ChevronDown className="h-3.5 w-3.5 group-hover:translate-y-0.5 transition-transform text-amber-600" />
                   Explore What&apos;s Trending
                 </button>
 
-                <p className="text-[9px] font-mono text-zinc-700 text-center">
-                  Powered by Virlo · backend-only · no key required
+                <p className="text-[9px] font-mono text-zinc-400 text-center uppercase tracking-widest">
+                  Powered by Virlo Intelligence
                 </p>
               </div>
             </div>
