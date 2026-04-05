@@ -20,12 +20,6 @@ export const metadata: Metadata = {
   title: 'AI-Vantage — News without the noise',
   description: 'AI-powered news intelligence from 30+ global sources. Aggregated, synthesized, and distilled in real-time.',
   keywords: ['news aggregator', 'AI news', 'real-time intelligence', 'news synthesis', 'Reuters', 'AP News'],
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    apple: '/apple-icon.png',
-  },
 }
 
 export const viewport: Viewport = {
